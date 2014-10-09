@@ -1,0 +1,27 @@
+#!/usr/bin/perl
+# PODNAME: conc-locate
+# ABSTRACT: run search queries
+
+use warnings;
+use strict;
+
+use Conclave::Concept::Mapper::Locate;
+
+my $base_uri = shift;
+my $query = shift;
+
+# FIXME allow more options for OTK
+unless ($base_uri and $query) {
+  print "Usage: \$ conc-locate <base_uri> <query>\n";
+  exit;
+}
+
+my $otk = Conclave::OTK->new($base_uri);
+my $locator = Conclave::Concept::Mapper::Locate->new( program => $otk );
+
+my $rank = $locator->locate($query);
+
+# FIXME
+use Data::Dumper;
+print Dumper $rank;
+
